@@ -9,3 +9,12 @@
 .center-image{
     margin:0 auto;
 }
+
+.full{
+    width: 80%;
+    padding:20px;
+    .center-button{
+        margin: 0 auto;
+    }
+}
+
