@@ -46,7 +46,7 @@ export default function Post({ post }) {
                     <Avatar
                         size="xxl"
                         variant="circular"
-                        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                        src="https://scontent.ffab1-2.fna.fbcdn.net/v/t39.30808-6/285353616_10226892590329717_8308219160690952356_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WT8TsxEK-FMQ7kNvgFDyh80&_nc_ht=scontent.ffab1-2.fna&oh=00_AYA7HR694KloOlKVEj3Z49jHWEzJSLnj-TRylGGxA1yrug&oe=66C82BAC"
                         alt="tania andrew"
                     />
                     <div className="flex w-full flex-col gap-0.5">
