@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -62,9 +64,18 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post) : RedirectResponse
     {
-        //
+        Gate::authorize('update', $post);
+
+        $validated = $request->validate([
+            'message' => 'required|string|max:200',
+            'audience' => 'required|string|max:50'
+        ]);
+
+        $post->update($validated);
+
+        return redirect(route('posts.index'));
     }
 
     /**
@@ -72,6 +83,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Gate::authorize('delete', $post);
+        $post->delete();
+        return redirect(route('posts.index'));
     }
 }
