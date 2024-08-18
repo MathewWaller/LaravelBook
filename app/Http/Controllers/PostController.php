@@ -48,9 +48,19 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show(Request $request, Post $post)
     {
-        //
+        $p = Post::with('user:id,name')->where('id', $request['id'])->get();
+
+        if (Gate::denies('view', [$p, $request['id']])) {
+            return inertia::render('Posts/AccessDenied', [
+                'posts'=> $p[0]
+            ]);
+        }
+
+        return inertia::render('Posts/View', [
+            'posts'=> $p[0]
+        ]);
     }
 
     /**

@@ -11,17 +11,32 @@ class PostPolicy
     /**
      * Determine whether the user can view any models.
      */
-    public function viewAny(User $user): bool
+    public function viewAny(User $user, Post $post): bool
     {
-        //
+        return true;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Post $post): bool
+    public function view(User $user, Post $post, $id): bool
     {
-        //
+        $postq = Post::with('user:id,name')->where('id', $id)->first();
+
+        switch( $postq->audience ) {
+            case 'All':
+                return false;
+            case 'Private':
+                $postq->user_id == $user->id ? $ret = true : $ret = false;
+                break;
+        }
+
+        return $ret;
+    }
+
+    public function show(User $User): bool
+    {
+        return true;
     }
 
     /**

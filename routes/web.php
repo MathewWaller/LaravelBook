@@ -15,7 +15,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
+Route::get('/dashboard', function () {  
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -26,7 +26,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('posts', PostController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
+    ->only(['index','accessdenied', 'store', 'update', 'destroy',])
     ->middleware(['auth', 'verified']);
+
+Route::get('/post/{id}', [PostController::class, 'show']);
 
 require __DIR__.'/auth.php';

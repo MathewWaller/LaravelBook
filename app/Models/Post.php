@@ -17,6 +17,7 @@ class Post extends Model
 
     protected $dispatchesEvents = [
         'created' => PostCreated::class,
+        'view' => PostCreated::class,
     ];
  
 
