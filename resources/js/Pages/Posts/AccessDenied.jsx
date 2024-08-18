@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import NotAuthorised from "@/Components/NotAuthorised"; "@/Components/NotAuthorised";
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head } from '@inertiajs/react';
+import { Button } from "@material-tailwind/react";
 
 export default function Index({ auth, posts }) {
     return (
@@ -22,12 +23,7 @@ export default function Index({ auth, posts }) {
                                 </PrimaryButton>
                             </div>
                         </article>
-
-
-
-
                     </div>
-
                 </div>
             </AuthenticatedLayout>
         </div>
