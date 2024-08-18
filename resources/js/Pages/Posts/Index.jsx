@@ -8,6 +8,16 @@ import { useForm, Head } from '@inertiajs/react';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
+import {
+    Card,
+    CardHeader,
+    CardBody,
+    Typography,
+    Avatar,
+    Button,
+    ButtonGroup
+} from "@material-tailwind/react";
+
 
 export default function Index({ auth, posts }) {
 
@@ -31,38 +41,55 @@ export default function Index({ auth, posts }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="LaravelBook - Posts" />
             <div>
-            <div className="max-w-2xl mx-auto p-4 sm:p-100 lg:p-5 m-3 sm:mt-5 bg-white rounded shadow">
-                <form onSubmit={submit}>
-                    <InputError message={errors.message} className="mt-2" />
-                    <textarea
-                        value={data.message}
-                        placeholder="What's on your mind?"
-                        className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        onChange={
-                            e => setData('message', e.target.value)
-                        }
-                    ></textarea>
-                    <div className="flex flex-row-reverse text-sm leading-6 text-gray-600">
-                        <div>
-                            <PrimaryButton className="mt-4 pb-4" disabled={processing}>Sign</PrimaryButton>
-                        </div>
-                        <div className='w-100 pr-5'>
-                            <Dropdown
-                                className='mt-4 mr-5 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
-                                options={audienceOptions}
-                                onChange={e => setData('audience', e.value)}
-                                value={defaultAudienceOption}
-                                placeholder="Select an option" />
-                        </div>
+                <div className="max-w-2xl mx-auto">
+                    <Typography variant="lead" className='max-w-1xl mx-auto sm:p-1 m-3 sm:mt-5'>
+                        What do you want to share with the world today?
+                    </Typography>
+                    <Card color="white" shadow={true} className="max-w-1xl mx-auto p-4 sm:p-1 lg:p-5 m-3 sm:mt-5">
+                        <CardHeader
+                            color="transparent"
+                            floated={false}
+                            shadow={false}
+                            className="mx-5 flex items-center gap-4 pt-0 pb-0"
+                        >
+                            <form className="flex w-full flex-col gap-0.5" onSubmit={submit}>
+                                <InputError message={errors.message} className="mt-2" />
+                                <textarea
+                                    value={data.message}
+                                    placeholder="What's on your mind?"
+                                    className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                                    onChange={
+                                        e => setData('message', e.target.value)
+                                    }
+                                ></textarea>
+                                <div className="flex flex-row-reverse text-sm leading-6 text-gray-600">
+                                    <div>
+                                        <PrimaryButton className="mt-4 pb-4" disabled={processing}>Sign</PrimaryButton>
+                                    </div>
+                                    <div className='w-100 pr-5'>
+                                        <Dropdown
+                                            className='mt-4 mr-5 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
+                                            options={audienceOptions}
+                                            onChange={e => setData('audience', e.value)}
+                                            value={defaultAudienceOption}
+                                            placeholder="Select an option" />
+                                    </div>
 
-                    </div>
-                </form>
-            </div>
-            <div className="max-w-2xl mx-auto">
-                {posts.map(post =>
-                    <Post key={post.id} post={post} />
-                )}
-            </div>
+                                </div>
+                            </form>
+                        </CardHeader>
+                    </Card>
+                    <Typography variant="lead" className='max-w-1xl mx-auto sm:p-1 m-3 sm:mt-5'>
+                        What are other people talking about?
+                    </Typography>
+                </div>
+
+
+                <div className="max-w-2xl mx-auto">
+                    {posts.map(post =>
+                        <Post key={post.id} post={post} />
+                    )}
+                </div>
             </div>
         </AuthenticatedLayout>
     );
