@@ -25,7 +25,7 @@ class PostPolicy
 
         switch( $postq->audience ) {
             case 'All':
-                return false;
+                return true;
             case 'Private':
                 $postq->user_id == $user->id ? $ret = true : $ret = false;
                 break;

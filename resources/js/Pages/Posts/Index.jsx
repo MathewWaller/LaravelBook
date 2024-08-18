@@ -1,11 +1,11 @@
 import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import InputError from '@/Components/InputError';
-import Post from '@/Components/Post';
+import PostCard from '@/Components/Post';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm, Head } from '@inertiajs/react';
 
-import Dropdown from 'react-dropdown';
+
 import 'react-dropdown/style.css';
 
 import {
@@ -15,7 +15,8 @@ import {
     Typography,
     Avatar,
     Button,
-    ButtonGroup
+    ButtonGroup,
+    Dropdown
 } from "@material-tailwind/react";
 
 
@@ -67,12 +68,7 @@ export default function Index({ auth, posts }) {
                                         <PrimaryButton className="mt-4 pb-4" disabled={processing}>Sign</PrimaryButton>
                                     </div>
                                     <div className='w-100 pr-5'>
-                                        <Dropdown
-                                            className='mt-4 mr-5 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm'
-                                            options={audienceOptions}
-                                            onChange={e => setData('audience', e.value)}
-                                            value={defaultAudienceOption}
-                                            placeholder="Select an option" />
+                                    
                                     </div>
 
                                 </div>
@@ -86,8 +82,8 @@ export default function Index({ auth, posts }) {
 
 
                 <div className="max-w-2xl mx-auto">
-                    {posts.map(post =>
-                        <Post key={post.id} post={post} />
+                    {posts.map(post_child =>
+                        <PostCard key={post_child.id} details={post_child} />
                     )}
                 </div>
             </div>
