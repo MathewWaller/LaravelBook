@@ -44,7 +44,13 @@ class LikesController extends Controller
 
         $request->user()->like()->create($validated);
 
-        return Response(["message" => "Post has been liked!"]);
+        $likes = likes::where('user_id', auth()->user()->id)->get("post_id");
+        $flippedLikes = array();
+        for($i = 0; $i < count($likes); $i++){
+            $flippedLikes[] = $likes[$i]->id;
+        }
+
+        return Response(["message" => $flippedLikes]);
     }
 
     /**
@@ -76,8 +82,10 @@ class LikesController extends Controller
      */
     public function destroy(Request $request)
     {
-        likes::where("post_id", $request["post_id"])->delete();
+        $validated = $request->validate([
+            'post_id' => 'required|int|max:200',
+        ]);
 
-        return response(["message"=> "Like has been removed"]);
+        likes::where("post_id", $request["post_id"])->where("user_id", $request->user()->id)->delete();       
     }
 }

@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\likes;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
 use Inertia\Response;
+
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class PostController extends Controller
 {
@@ -17,8 +20,15 @@ class PostController extends Controller
      */
     public function index() : Response
     {
+        $likes = likes::where('user_id', auth()->user()->id)->get("post_id");
+        $flippedLikes = array();
+        for($i = 0; $i < count($likes); $i++){
+            $flippedLikes[] = $likes[$i]['post_id'];
+        }
+
         return inertia::render('Posts/Index', [
-            'posts'=> Post::with('user:id,name')->latest()->get()
+            'posts'=> Post::with('user:id,name')->latest()->get(),
+            'likes' => $flippedLikes,
         ]);
     }
 

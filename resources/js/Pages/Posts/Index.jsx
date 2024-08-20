@@ -20,7 +20,8 @@ import {
 } from "@material-tailwind/react";
 
 
-export default function Index({ auth, posts }) {
+export default function Index({ auth, posts, likes }) {
+
 
     const audienceOptions = [
         'All', 'Private'
@@ -83,7 +84,7 @@ export default function Index({ auth, posts }) {
 
                 <div className="max-w-2xl mx-auto">
                     {posts.map(post_child =>
-                        <PostCard key={post_child.id} details={post_child} />
+                        <PostCard likes={likes} key={post_child.id} details={post_child} />
                     )}
                 </div>
             </div>

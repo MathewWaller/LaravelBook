@@ -52,7 +52,7 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
             <Transition
                 show={open}
                 enter="transition ease-out duration-200"
-                enterFrom="opacity-0 scale-95"
+                enterFrom="opacity-90 scale-95"
                 enterTo="opacity-100 scale-100"
                 leave="transition ease-in duration-75"
                 leaveFrom="opacity-100 scale-100"
@@ -74,7 +74,7 @@ const DropdownLink = ({ className = '', children, ...props }) => {
         <Link
             {...props}
             className={
-                'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out ' +
+                'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-red-300 transition duration-150 ease-in-out ' +
                 className
             }
         >
