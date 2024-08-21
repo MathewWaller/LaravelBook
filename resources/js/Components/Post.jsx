@@ -20,7 +20,7 @@ import {
 
 dayjs.extend(relativeTime);
 
-export default function PostCard({ details, likes }) {
+export default function PostCard({ details, likes, following }) {
 
 
     const { auth } = usePage().props;
@@ -35,6 +35,7 @@ export default function PostCard({ details, likes }) {
     });
 
     const [liked, setLiked] = useState((likes.includes(details.id)) ? false : true);
+    const [followed, setFollowed] = useState((following.includes(details.user.id)) ? false : true);
     
 
     const submit = (e) => {
@@ -57,7 +58,16 @@ export default function PostCard({ details, likes }) {
         }else{
             post(route('likes.destroy', details.id), { onSuccess: () => setLiked(false) });
         }
+    }
 
+    const followerUser = (e) => {
+        e.preventDefault();
+            axios.post(route('follow.store'), {
+                user_id: details.user.id,
+            })
+                .then(res => {
+                    setFollowed(res['data']['message']);
+                })
     }
 
     return (
@@ -76,14 +86,13 @@ export default function PostCard({ details, likes }) {
                 />
                 <div className="flex w-full flex-col gap-0.5">
                     <div className="flex items-center justify-between">
-                        <div>
+                    <div className="flex items-end gap-2">
                             <Typography variant="h5" color="blue-gray">
                                 {details.user.name}
-                                {details.user.id !== auth.user.id &&
-                                    <Button color="blue" className='ml-1 p-1 text-sm'>Follow</Button>
-                                }
                             </Typography>
-
+                                {details.user.id == auth.user.id &&
+                                    <Button color="blue" onClick={followerUser} className='ml-1 p-1 text-sm'>{followed ? "Unfollow" : "Follow" }</Button>
+                                }
                         </div>
                         <div className="5 flex items-center gap-0">
                             {details.user.id === auth.user.id &&

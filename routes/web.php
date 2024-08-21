@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/like', [LikesController::class, 'store'])->name('likes.store');
     Route::post('/like/delete', [LikesController::class, 'destroy'])->name('likes.destroy');
+    Route::post('/follow', [FollowerController::class, 'store'])->name('follow.store');
+    Route::post('/follow/remove', [FollowerController::class, 'destroy'])->name('follow.destroy');
 });
 
 Route::resource('posts', PostController::class)
