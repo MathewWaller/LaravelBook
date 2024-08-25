@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Models\likes;
+use App\Models\Follower;
 use App\Models\Post;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -20,15 +21,22 @@ class PostController extends Controller
      */
     public function index() : Response
     {
-        $likes = likes::where('user_id', auth()->user()->id)->get("post_id");
+        $likes = likes::where('user_id', auth()->user()->id)->get();
         $flippedLikes = array();
         for($i = 0; $i < count($likes); $i++){
             $flippedLikes[] = $likes[$i]['post_id'];
         }
 
+        $followers = Follower::where('follower_user_id', auth()->user()->id)->get('user_id');
+        $flippedFollowers = array();
+        for($i = 0; $i < count($followers); $i++){
+            $flippedFollowers[] = $followers[$i]['user_id'];
+        }
+
         return inertia::render('Posts/Index', [
             'posts'=> Post::with('user:id,name')->latest()->get(),
             'likes' => $flippedLikes,
+            'followers' =>  $flippedFollowers,
         ]);
     }
 
@@ -90,7 +98,7 @@ class PostController extends Controller
 
         $validated = $request->validate([
             'message' => 'required|string|max:200',
-            'audience' => 'required|string|max:50'
+            'audience' => 'required|string|max:50',
         ]);
 
         $post->update($validated);

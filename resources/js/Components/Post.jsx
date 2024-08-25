@@ -34,8 +34,8 @@ export default function PostCard({ details, likes, following }) {
         author_id: details.user.id,
     });
 
-    const [liked, setLiked] = useState((likes.includes(details.id)) ? false : true);
-    const [followed, setFollowed] = useState((following.includes(details.user.id)) ? false : true);
+    const [liked, setLiked] = useState((likes) ? false : true);
+    const [followed, setFollowed] = useState((following) ? true : false);
     
 
     const submit = (e) => {
@@ -71,7 +71,7 @@ export default function PostCard({ details, likes, following }) {
     }
 
     return (
-        <Card color="white" shadow={true} className="max-w-1xl mx-auto p-4 sm:p-100 lg:p-5 m-3 sm:mt-5">
+        <Card color="white" shadow={true} className="max-w-1x2 mx-auto p-4 sm:p-10 lg:p-5 m-10">
             <CardHeader
                 color="transparent"
                 floated={false}
@@ -79,7 +79,7 @@ export default function PostCard({ details, likes, following }) {
                 className="mx-5 flex items-center gap-4 pt-0"
             >
                 <Avatar
-                    size="xxl"
+                    size="xl"
                     variant="circular"
                     src="https://scontent.ffab1-2.fna.fbcdn.net/v/t39.30808-6/285353616_10226892590329717_8308219160690952356_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=WT8TsxEK-FMQ7kNvgFDyh80&_nc_ht=scontent.ffab1-2.fna&oh=00_AYA7HR694KloOlKVEj3Z49jHWEzJSLnj-TRylGGxA1yrug&oe=66C82BAC"
                     alt="tania andrew"
@@ -132,7 +132,7 @@ export default function PostCard({ details, likes, following }) {
                     }
                 </div>
             </CardHeader>
-            <CardBody className='p-0 right-10 flex'>
+            <CardBody className='w-full p-100 right-20 flex'>
 
                 <div onClick={e => likepost(e)} className="inline-flex" style={{ marginLeft: "auto" }}>
                     <button className="bg-gray-300 hover:bg-blue-400 text-blue-500 hover:text-white font-bold py-2 px-4 rounded inline-flex items-center">

@@ -19,24 +19,10 @@ import {
     Dropdown
 } from "@material-tailwind/react";
 
+import NewPostCard from '../../Components/NewPostCard'
 
-export default function Index({ auth, posts, likes}) {
-    const audienceOptions = [
-        'All', 'Private'
-    ];
 
-    const defaultAudienceOption = audienceOptions[0];
-
-    const { data, setData, post, processing, reset, errors } = useForm({
-        message: '',
-        audience: 'All',
-    });
-
-    const submit = (e) => {
-        e.preventDefault();
-        post(route('posts.store'), { onSuccess: () => reset() });
-    };
-
+export default function Index({ auth, posts, likes, followers}) {
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="LaravelBook - Posts" />
@@ -45,44 +31,14 @@ export default function Index({ auth, posts, likes}) {
                     <Typography variant="lead" className='max-w-1xl mx-auto sm:p-1 m-3 sm:mt-5'>
                         What do you want to share with the world today?
                     </Typography>
-                    <Card color="white" shadow={true} className="max-w-1xl mx-auto p-4 sm:p-1 lg:p-5 m-3 sm:mt-5">
-                        <CardHeader
-                            color="transparent"
-                            floated={false}
-                            shadow={false}
-                            className="mx-5 flex items-center gap-4 pt-0 pb-0"
-                        >
-                            <form className="flex w-full flex-col gap-0.5" onSubmit={submit}>
-                                <InputError message={errors.message} className="mt-2" />
-                                <textarea
-                                    value={data.message}
-                                    placeholder="What's on your mind?"
-                                    className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                                    onChange={
-                                        e => setData('message', e.target.value)
-                                    }
-                                ></textarea>
-                                <div className="flex flex-row-reverse text-sm leading-6 text-gray-600">
-                                    <div>
-                                        <PrimaryButton className="mt-4 pb-4" disabled={processing}>Sign</PrimaryButton>
-                                    </div>
-                                    <div className='w-100 pr-5'>
-                                    
-                                    </div>
-
-                                </div>
-                            </form>
-                        </CardHeader>
-                    </Card>
+                    <NewPostCard/>
                     <Typography variant="lead" className='max-w-1xl mx-auto sm:p-1 m-3 sm:mt-5'>
                         What are other people talking about?
                     </Typography>
                 </div>
-
-
                 <div className="max-w-2xl mx-auto">
                     {posts.map(post_child =>
-                        <PostCard following={[1]} likes={likes} key={post_child.id} details={post_child} />
+                        <PostCard following={followers.includes(post_child.user.id)} likes={likes.includes(post_child.id)} key={post_child.id} details={post_child} />
                     )}
                 </div>
             </div>

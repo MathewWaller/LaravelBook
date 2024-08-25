@@ -33,10 +33,13 @@ class LikesController extends Controller
      */
     public function store(Request $request,likes $likes) : Response
     {
+     
         $validated = $request->validate([
             'post_id' => 'required|int|max:200',
             'author_id' => 'required|int|max:200'
         ]);
+
+        $validated['user_id'] = auth()->id();
 
         Gate::authorize('update', [$likes, $request['id']]);
 
@@ -44,13 +47,13 @@ class LikesController extends Controller
 
         $request->user()->like()->create($validated);
 
-        $likes = likes::where('user_id', auth()->user()->id)->get("post_id");
+        $likes = likes::where('user_id', $request->user()->id)->get("post_id");
         $flippedLikes = array();
         for($i = 0; $i < count($likes); $i++){
             $flippedLikes[] = $likes[$i]->id;
         }
 
-        return Response(["message" => $flippedLikes]);
+        return Response(["message" => $request->user()->id]);
     }
 
     /**
